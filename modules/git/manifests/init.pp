@@ -1,41 +1,38 @@
-# == Class: git
+# Class: git
 #
-# Full description of class git here.
+# This class installs and configures git
+#
+# Actions:
+#   - Install the git package
+#   - Configure git
+#
+# Sample Usage:
+#  class { 'git': }
 #
 # === Parameters
 #
-# Document parameters here.
+# [*package_ensure*]
+#   Value to be passed to ensure in the package resource. Defaults to installed.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*package_manage*]
+#   boolean toggle to overide the management of the git package.
+#   You may want to change this behavior if another module manages git packages
+#   defaults to true
 #
-# === Variables
+# [*configs*]
+#   hash of configurations as per the git::config defined type
 #
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
-#
-# === Examples
-#
-#  class { git:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2014 Your name here, unless otherwise noted.
-#
-class git {
-
-
+class git (
+  $package_name   = 'git',
+  $package_ensure = 'installed',
+  $package_manage = true,
+  $configs = {}
+) {
+  if ( $package_manage ) {
+    package { $package_name:
+      ensure => $package_ensure,
+    }
+  }
+  
+  create_resources(git::config, $configs)
 }

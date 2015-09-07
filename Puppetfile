@@ -17,6 +17,7 @@ mod "puppetlabs/apache", "1.4.1"
 mod "puppetlabs/mysql", "2.2.3"
 mod "puppetlabs/ntp", "4.1.0"
 mod "puppetlabs/concat", "1.2.1"
+mod "saz/motd"
 
 # Modules from Github
 mod "base",
